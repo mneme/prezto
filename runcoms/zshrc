@@ -11,3 +11,23 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+TERM="xterm-256color"
+
+export LESS="$LESS -FRXK"
+
+# Set the defaut user.
+DEFAULT_USER=mneme
+
+setopt HIST_FIND_NO_DUPS
+
+# Init fuck
+eval $(thefuck --alias)
+eval "$(direnv hook $SHELL)"
+
+nocorrects=('compose' 'init' 'aws' 'json' 'jest')
+
+for cmd in $nocorrects; do
+  if ! type $cmd | grep -Fq alias; then
+    alias $cmd="nocorrect $cmd"
+  fi
+done
